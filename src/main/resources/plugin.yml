@@ -1,0 +1,14 @@
+main: "kun.garrulity.garrulity_jinro.Main"
+name: "Garrulity_Jinro"
+version: "1.0.0"
+api-version: "1.15"
+
+commands:
+  key:
+    description: "デバッグ用"
+    permission: "default"
+  word-restart:
+    description: "朝にした上で、キーワードを割り振り直します"
+    permission: "default"
+
+
