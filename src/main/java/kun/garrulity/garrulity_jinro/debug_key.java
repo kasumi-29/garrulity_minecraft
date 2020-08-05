@@ -1,10 +1,6 @@
 package kun.garrulity.garrulity_jinro;
 
-import org.bukkit.BanList;
-import org.bukkit.Bukkit;
 import org.bukkit.command.*;
-
-import java.util.UUID;
 
 public class debug_key implements CommandExecutor {
     private final Main m;
@@ -13,8 +9,22 @@ public class debug_key implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
+        if(args.length<1){
+            sender.sendMessage("引数が足りません");
+            return false;
+        }
+        switch (args[0]){
+            case "nextRound":
+                m.nextRound();
+                break;
+            case "skipDay":
+                m.skipDay();
+                break;
+            default:
+                sender.sendMessage("該当コマンドが見つかりません");
+                return false;
+        }
 
-        m.nextRound();
 
         return true;
     }
