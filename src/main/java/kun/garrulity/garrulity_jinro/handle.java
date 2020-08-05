@@ -12,9 +12,7 @@ public class handle implements Listener {
 
     @EventHandler
     public void onTimeSkip(TimeSkipEvent event){
-        m.skipDay();
-        Bukkit.broadcastMessage("[@GM]時間がスキップしたため、BAN者はいませんでした。");
-        m.nextRound();
+
     }
 
 }
