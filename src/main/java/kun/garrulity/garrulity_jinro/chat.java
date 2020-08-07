@@ -9,11 +9,15 @@ public class chat implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
+        Player p=event.getPlayer();
         if(!m.isAdmin(event.getPlayer())) {
-            event.getPlayer().sendMessage("[@GM]本日のキーワードは「" + m.getKeyword(event.getPlayer()) + "」です");
+            p.sendMessage("[@GM]本日のキーワードは「" + m.getKeyword(p) + "」です。");
+            if(m.isClear(p)){
+                p.sendMessage("[@GM]すでに本日のキーワードはCLEAR済です。");
+            }
         }else{
-            event.getPlayer().sendMessage("[@GM]あなたは管理者ロールのため、キーワードは出題されません。");
-            event.getPlayer().sendMessage("[@GM]管理者ロールを外れるには /word-deladmin を実行してください。");
+            p.sendMessage("[@GM]あなたは管理者ロールのため、お題は出題されません。");
+            p.sendMessage("[@GM]管理者ロールを外れるには /word-deladmin を実行してください。");
         }
     }
 

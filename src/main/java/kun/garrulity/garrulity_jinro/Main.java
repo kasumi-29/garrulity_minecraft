@@ -45,13 +45,13 @@ public class Main extends JavaPlugin {
     }
     public void setAdmin(Player p){
         if(admin.add(p.getName())) {
-            getConfig().set("admin", admin);
+            getConfig().set("admin", new ArrayList<>(admin));
             saveConfig();
         }
     }
     public void delAdmin(Player p){
         if(admin.remove(p.getName())) {
-            getConfig().set("admin", admin);
+            getConfig().set("admin", new ArrayList<>(admin));
             saveConfig();
         }
     }
@@ -76,12 +76,10 @@ public class Main extends JavaPlugin {
         old_keyword_map.clear();
         word_clear.clear();
     }
-    public void skipDay(){
-        word_clear.addAll(keyword_map.keySet());
-    }
-    public void doClear(Player p){
-        word_clear.add(p.getUniqueId());
-    }
+    public void skipDay(){word_clear.addAll(keyword_map.keySet());}
+    public void doClear(Player p){word_clear.add(p.getUniqueId());}
+    public boolean isClear(Player p){return isClear(p.getUniqueId());}
+    public boolean isClear(UUID id){return word_clear.contains(id);}
     public void nextRound(){//朝が来ると実行
         old_keyword_map.clear();
         old_keyword_map.putAll(keyword_map);
@@ -94,18 +92,19 @@ public class Main extends JavaPlugin {
                 p.sendMessage("[@GM]すでにあなたは管理者ロールです。");
                 continue;
             }
-            if (!word_clear.contains(id)) {//キーワードを入力できなかった人
+            if (!isClear(id)) {//キーワードを入力できなかった人
                 old_keyword_map.remove(id);
                 Bukkit.getBanList(BanList.Type.NAME).addBan(id.toString(), "キーワードを入力できなかったため", null, null);
                 Objects.requireNonNull(p).kickPlayer("キーワードを入力できなかったため");
-                Bukkit.broadcastMessage(p.getPlayerListName()+"さんがBANされました。");
+                Bukkit.broadcastMessage("[@GM]"+p.getPlayerListName()+"さんがBANされました。");
                 count++;
             }else{
                 String new_keyword=putKeyword();
                 keyword_map.put(id,new_keyword);
             }
         }
-        Bukkit.broadcastMessage("[@GM]本日のBAN者は"+count+"人です。\n");
+        Bukkit.broadcastMessage("[@GM]本日のBAN者は"+count+"人です。");
+        Bukkit.broadcastMessage("");
         //BAN通知の後にまとめてキーワードを送信する
         for (UUID id:keyword_map.keySet()){
             Player p=Bukkit.getPlayer(id);
