@@ -6,19 +6,37 @@ api-version: "1.15"
 commands:
   key:
     description: "デバッグ用"
-    permission: "default"
+    permission: garrulity.op
     usage: "/<command>"
   word-restart:
     description: "朝にした上で、キーワードを割り振り直します"
-    permission: "default"
+    permission: garrulity.op
     usage: "/<command>"
   word-setadmin:
     description: "お題が出題されない、管理者ロールに追加します"
-    permission: "default"
-    usage: "/<command> [Player]"
+    permission: garrulity.op
+    usage: "/<command> [player]"
   word-deladmin:
     description: "お題が出題されない、管理者ロールから削除します"
-    permission: "default"
-    usage: "/<command> [Player]"
+    permission: garrulity.op
+    usage: "/<command> [player]"
+  word-challenge:
+    description: "お題が分かった場合、チャレンジをします"
+    permission: garrulity.public
+    usage: "
+    /<command> [player] [keyword]
+    使用例: プレイヤー「famas1219」の昨日または今日のお題が「建築」だと推測した場合、次のようにコマンドを入力します。
+    　　　　/<command> famas1219 建築
+    チャレンジが成功した場合、相手は即時BANされ、チャレンジした人は次の日のお題が免除されます。"
 
+permissions:
+  garrulity.op:
+    description: "追加される殆どのコマンドを用いる場合に利用します"
+    default: op
+  garrulity.public:
+    description: "チャレンジコマンドを用いる場合に利用します"
+    default: true
+  garrulity.debug:
+    description: "デバッグ用のコマンドであり、通常は使用しません"
+    default: false
 
