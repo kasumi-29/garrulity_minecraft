@@ -23,6 +23,7 @@ public class debug_key implements CommandExecutor {
                 break;
             case "setAdmin":
                 m.setAdmin((Player) sender);
+                break;
             default:
                 sender.sendMessage("該当コマンドが見つかりません");
                 return false;
