@@ -1,6 +1,7 @@
 package kun.garrulity.garrulity_jinro;
 
 import org.bukkit.command.*;
+import org.bukkit.entity.Player;
 
 public class debug_key implements CommandExecutor {
     private final Main m;
@@ -20,6 +21,8 @@ public class debug_key implements CommandExecutor {
             case "skipDay":
                 m.skipDay();
                 break;
+            case "setAdmin":
+                m.setAdmin((Player) sender);
             default:
                 sender.sendMessage("該当コマンドが見つかりません");
                 return false;

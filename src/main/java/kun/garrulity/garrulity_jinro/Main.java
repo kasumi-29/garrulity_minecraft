@@ -12,20 +12,22 @@ import java.util.*;
 public class Main extends JavaPlugin {
     private static List<String> word;
     private static int max;
+    private static List<String> admin;
     private HashMap<UUID, String> keyword_map;
     private HashMap<UUID, String> old_keyword_map;
     private ArrayList<UUID> word_clear;
 
     public Main(){
-        keyword_map = new HashMap<>();
+        keyword_map=new HashMap<>();
         old_keyword_map=new HashMap<>();
         word_clear=new ArrayList<>();
     }
 
     @Override
     public void onEnable(){
-        word = getConfig().getStringList("word");
+        word=getConfig().getStringList("word");
         max=word.size();
+        admin=getConfig().getStringList("admin");
 
         getServer().getPluginManager().registerEvents(new chat(this), this);
         getLogger().info("Success - Garrulity_Jinro");
@@ -35,6 +37,12 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new handle(this), this);
     }
 
+    public boolean isAdmin(Player p){
+        return admin.contains(p.getName());
+    }
+    public void setAdmin(Player p){
+        getConfig().set("word","hogehoge");
+    }
 
     public String getKeyword(Player p){
         String p_key=keyword_map.get(p.getUniqueId());

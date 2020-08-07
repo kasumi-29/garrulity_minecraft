@@ -9,7 +9,12 @@ public class chat implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
-        event.getPlayer().sendMessage("[@GM]本日のキーワードは「"+m.getKeyword(event.getPlayer())+"」です");
+        if(!m.isAdmin(event.getPlayer())) {
+            event.getPlayer().sendMessage("[@GM]本日のキーワードは「" + m.getKeyword(event.getPlayer()) + "」です");
+        }else{
+            event.getPlayer().sendMessage("[@GM]あなたは管理者ロールのため、キーワードは出題されません。");
+            event.getPlayer().sendMessage("[@GM]管理者ロールを外れるには /word-deladmin を実行してください。");
+        }
     }
 
     @EventHandler

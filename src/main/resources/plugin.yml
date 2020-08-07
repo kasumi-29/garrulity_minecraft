@@ -7,8 +7,18 @@ commands:
   key:
     description: "デバッグ用"
     permission: "default"
+    usage: "/<command>"
   word-restart:
     description: "朝にした上で、キーワードを割り振り直します"
     permission: "default"
+    usage: "/<command>"
+  word-setadmin:
+    description: "お題が出題されない、管理者ロールに追加します"
+    permission: "default"
+    usage: "/<command> [Player]"
+  word-deladmin:
+    description: "お題が出題されない、管理者ロールから削除します"
+    permission: "default"
+    usage: "/<command> [Player]"
 
 
