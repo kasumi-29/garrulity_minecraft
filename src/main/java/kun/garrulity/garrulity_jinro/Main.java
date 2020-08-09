@@ -38,6 +38,7 @@ public class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("word-restart")).setExecutor(new word_restart(this));
         Objects.requireNonNull(getCommand("word-setadmin")).setExecutor(new word_admin(this));
         Objects.requireNonNull(getCommand("word-deladmin")).setExecutor(new word_admin(this));
+        Objects.requireNonNull(getCommand("word-challenge")).setExecutor(new challenge(this));
         getServer().getPluginManager().registerEvents(new handle(this), this);
     }
 
