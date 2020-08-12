@@ -14,5 +14,6 @@ public class handle implements Listener {
     public void onTimeSkip(TimeSkipEvent event){
 
     }
+    //今後の拡張用にclass自体は残しておきますが、現在は使用していません。
 
 }

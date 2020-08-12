@@ -91,6 +91,7 @@ public class Main extends JavaPlugin {
         word_clear.clear();
     }
     private void ban(Player p,String reason){
+        if(isAdmin(p)){return;}
         Bukkit.getBanList(BanList.Type.NAME).addBan(p.getUniqueId().toString(), reason, null, null);
         Objects.requireNonNull(p).kickPlayer(reason);
         count++;
