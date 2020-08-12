@@ -20,7 +20,9 @@ public class challenge implements CommandExecutor {
         if(m.challenge(p,args[1])){
             Bukkit.broadcastMessage("[@GM]"+sender+"さんが"+args[0]+"さんのキーワードチャレンジに成功しました。");
             m.putSavedList((Player)sender);
+            //Todo エフェクトを追加
         }
+        //Todo 1人何回チャレンジできるかの判定
         return true;
     }
 }
