@@ -16,16 +16,16 @@ public class Main extends JavaPlugin {
     private HashMap<UUID, String> keyword_map;
     private HashMap<UUID, String> old_keyword_map;
     private ArrayList<UUID> word_clear;
+    private ArrayList<UUID> saved;
     private int count=0;
-
-    public Main(){
-        keyword_map=new HashMap<>();
-        old_keyword_map=new HashMap<>();
-        word_clear=new ArrayList<>();
-    }
 
     @Override
     public void onEnable(){
+        keyword_map=new HashMap<>();
+        old_keyword_map=new HashMap<>();
+        word_clear=new ArrayList<>();
+        saved=new ArrayList<>();
+
         saveDefaultConfig();
         word=getConfig().getStringList("word");
         max=word.size();
@@ -49,6 +49,8 @@ public class Main extends JavaPlugin {
         if(admin.add(p.getName())) {
             getConfig().set("admin", new ArrayList<>(admin));
             saveConfig();
+            keyword_map.remove(p.getUniqueId());
+            old_keyword_map.remove(p.getUniqueId());
         }
     }
     public void delAdmin(Player p){
@@ -56,6 +58,9 @@ public class Main extends JavaPlugin {
             getConfig().set("admin", new ArrayList<>(admin));
             saveConfig();
         }
+    }
+    public void putSavedList(Player p){
+        saved.add(p.getUniqueId());
     }
     public String getKeyword(Player p){
         String p_key=keyword_map.get(p.getUniqueId());
@@ -76,13 +81,11 @@ public class Main extends JavaPlugin {
     public boolean challenge(Player p,String keyword_challenge){
         if(isKeyword(p,keyword_challenge)){
             ban(p,"キーワードを知られてしまったため");
-            keyword_map.remove(p.getUniqueId());
-            old_keyword_map.remove(p.getUniqueId());
             return true;
         }
         return false;
     }
-    private void AllResetKeyword(){
+    public void AllResetKeyword(){
         keyword_map.clear();
         old_keyword_map.clear();
         word_clear.clear();
@@ -91,6 +94,9 @@ public class Main extends JavaPlugin {
         Bukkit.getBanList(BanList.Type.NAME).addBan(p.getUniqueId().toString(), reason, null, null);
         Objects.requireNonNull(p).kickPlayer(reason);
         count++;
+        keyword_map.remove(p.getUniqueId());
+        old_keyword_map.remove(p.getUniqueId());
+        Bukkit.broadcastMessage("[@GM]"+p.getPlayerListName()+"さんがBANされました。");
     }
     public void skipDay(){word_clear.addAll(keyword_map.keySet());}
     public void doClear(Player p){word_clear.add(p.getUniqueId());}
@@ -110,7 +116,6 @@ public class Main extends JavaPlugin {
             if (!isClear(id)) {//キーワードを入力できなかった人
                 old_keyword_map.remove(id);
                 ban(p,"キーワードを入力できなかったため");
-                Bukkit.broadcastMessage("[@GM]"+p.getPlayerListName()+"さんがBANされました。");
             }else{
                 String new_keyword=putKeyword();
                 keyword_map.put(id,new_keyword);
@@ -119,12 +124,21 @@ public class Main extends JavaPlugin {
         Bukkit.broadcastMessage("[@GM]本日のBAN者は"+count+"人です。");
         Bukkit.broadcastMessage("");
         //BAN通知の後にまとめてキーワードを送信する
+        Bukkit.broadcastMessage("[@GM]おめでとうございます。何とか疑われずに生き残ったようですね！");
         for (UUID id:keyword_map.keySet()){
             Player p=Bukkit.getPlayer(id);
-            Objects.requireNonNull(p).sendMessage("[@GM]おめでとうございます。何とか疑われずに生き残ったようですね！");
-            p.sendMessage("[@GM]本日のキーワードは「"+keyword_map.get(id)+"」です。");
+            if(p==null){continue;}
+            p.sendMessage("[@GM]本日のあなたのキーワードは「"+keyword_map.get(id)+"」です。");
+        }
+        for(UUID id:saved){
+            Player p=Bukkit.getPlayer(id);
+            if(p==null){continue;}
+            p.sendMessage("[@GM]キーワードチャレンジの報酬としてCLEARといたします。");
+            p.sendTitle("お題CLEAR！","",10,70,20);
+            doClear(p);
         }
         word_clear.clear();
+        saved.clear();
         count=0;
 
     }

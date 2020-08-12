@@ -24,6 +24,8 @@ public class debug_key implements CommandExecutor {
             case "setAdmin":
                 m.setAdmin((Player) sender);
                 break;
+            case "break":
+                m.AllResetKeyword();
             default:
                 sender.sendMessage("該当コマンドが見つかりません");
                 return false;
