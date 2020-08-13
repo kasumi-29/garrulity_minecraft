@@ -2,9 +2,6 @@ package kun.garrulity.garrulity_jinro;
 
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.defaults.BukkitCommand;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.plugin.java.*;
 import java.util.*;
@@ -17,7 +14,9 @@ public class Main extends JavaPlugin {
     private HashMap<UUID, String> old_keyword_map;
     private ArrayList<UUID> word_clear;
     private ArrayList<UUID> saved;
-    private int count=0;
+    private int count;
+    private int maxchallenge;
+    private HashMap<UUID, Integer> challengelog;
 
     @Override
     public void onEnable(){
@@ -25,11 +24,14 @@ public class Main extends JavaPlugin {
         old_keyword_map=new HashMap<>();
         word_clear=new ArrayList<>();
         saved=new ArrayList<>();
+        count=0;
+        challengelog=new HashMap<>();
 
         saveDefaultConfig();
         word=getConfig().getStringList("word");
         max=word.size();
         admin=new HashSet<>(getConfig().getStringList("admin"));
+        maxchallenge=getConfig().getInt("maxchallenge");
 
         getServer().getPluginManager().registerEvents(new chat(this), this);
         getLogger().info("Success - Garrulity_Jinro");
@@ -78,9 +80,15 @@ public class Main extends JavaPlugin {
     public boolean isKeyword(Player p,String keyword_challenge){
         return keyword_map.get(p.getUniqueId()).equals(keyword_challenge) || old_keyword_map.get(p.getUniqueId()).equals(keyword_challenge);
     }
-    public boolean challenge(Player p,String keyword_challenge){
-        if(isKeyword(p,keyword_challenge)){
-            ban(p,"キーワードを知られてしまったため");
+    public boolean isChallengeLog(Player p){
+        Integer player_challenge=challengelog.get(p.getUniqueId());
+        if(player_challenge==null){return false;}
+        return player_challenge >= 3;
+    }
+    public boolean challenge(Player fromP,Player toP,String keyword_challenge){
+        if(isChallengeLog(fromP)){return false;}
+        if(isKeyword(toP,keyword_challenge)){
+            ban(toP,"キーワードを知られてしまったため");
             return true;
         }
         return false;
@@ -97,6 +105,9 @@ public class Main extends JavaPlugin {
         count++;
         keyword_map.remove(p.getUniqueId());
         old_keyword_map.remove(p.getUniqueId());
+        word_clear.remove(p.getUniqueId());
+        saved.remove(p.getUniqueId());
+        challengelog.remove(p.getUniqueId());
         Bukkit.broadcastMessage("[@GM]"+p.getPlayerListName()+"さんがBANされました。");
     }
     public void skipDay(){word_clear.addAll(keyword_map.keySet());}
@@ -107,6 +118,7 @@ public class Main extends JavaPlugin {
         old_keyword_map.clear();
         old_keyword_map.putAll(keyword_map);
         keyword_map.clear();
+        challengelog.clear();
         for (UUID id : old_keyword_map.keySet()) {
             Player p=Bukkit.getPlayer(id);
             if(p==null){continue;}
