@@ -1,7 +1,10 @@
 package kun.garrulity.garrulity_jinro;
 
 import org.bukkit.command.*;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class debug_key implements CommandExecutor {
     private final Main m;
@@ -26,6 +29,10 @@ public class debug_key implements CommandExecutor {
                 break;
             case "break":
                 m.AllResetKeyword();
+                break;
+            case "effect":
+                ((LivingEntity) sender).addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,10*60*20,2,false,true,true));
+                break;
             default:
                 sender.sendMessage("該当コマンドが見つかりません");
                 return false;
