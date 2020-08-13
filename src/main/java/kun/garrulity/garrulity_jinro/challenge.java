@@ -29,7 +29,7 @@ public class challenge implements CommandExecutor {
         if(m.challenge((Player)sender,p,args[1])){
             Bukkit.broadcastMessage("[@GM]"+sender+"さんが"+args[0]+"さんのキーワードチャレンジに成功しました。");
             m.putSavedList((Player)sender);
-            ((LivingEntity) sender).addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,10*60*20,2,false,true,true));
+            ((LivingEntity) sender).addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,10*60*20,2,false,false,true));
         }else{
             sender.sendMessage("[@GM]キーワードが違います。");
         }

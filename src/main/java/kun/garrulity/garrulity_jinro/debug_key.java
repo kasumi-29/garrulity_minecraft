@@ -31,7 +31,7 @@ public class debug_key implements CommandExecutor {
                 m.AllResetKeyword();
                 break;
             case "effect":
-                ((LivingEntity) sender).addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,10*60*20,2,false,true,true));
+                ((LivingEntity) sender).addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,10*60*20,2,false,false,true));
                 break;
             default:
                 sender.sendMessage("該当コマンドが見つかりません");
