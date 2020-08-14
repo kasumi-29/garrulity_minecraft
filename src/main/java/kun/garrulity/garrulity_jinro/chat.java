@@ -9,17 +9,20 @@ public class chat implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
-        Player p=event.getPlayer();
-        if(!m.isAdmin(p)) {
-            p.sendMessage("[@GM]本日のキーワードは「" + m.getKeyword(p) + "」です。");
-            if(m.isClear(p)){
-                p.sendMessage("[@GM]すでに本日のキーワードはCLEAR済です。");
+        m.getServer().getScheduler().runTaskLater(m, () -> {
+            Player p = event.getPlayer();
+            if(!m.isAdmin(p)) {
+                p.sendMessage("[@GM]ようこそ。");
+                p.sendMessage("[@GM]本日のキーワードは「" + m.getKeyword(p) + "」です。");
+                if(m.isClear(p)){
+                    p.sendMessage("[@GM]すでに本日のキーワードはCLEAR済です。");
+                }
+            }else{
+                p.sendMessage("[@GM]あなたは管理者ロールのため、お題は出題されません。");
+                p.sendMessage("[@GM]管理者ロールを外れるには /word-deladmin を実行してください。");
             }
-        }else{
-            p.sendMessage("[@GM]あなたは管理者ロールのため、お題は出題されません。");
-            p.sendMessage("[@GM]管理者ロールを外れるには /word-deladmin を実行してください。");
-        }
-        p.sendMessage("[@GM]他のプレイヤーのお題が分かったら、 /word-challenge コマンドを実行してみてください。");
+            p.sendMessage("[@GM]他のプレイヤーのお題が分かったら、 /word-challenge コマンドを実行してみてください。");
+        },1L);
     }
 
     @EventHandler

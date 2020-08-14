@@ -15,7 +15,7 @@ public class word_restart implements CommandExecutor,TabCompleter {
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
         m.skipDay();
         for(World w:Bukkit.getWorlds()){
-            w.setTime(1L);
+            w.setTime(2L);
         }
         m.nextRound();
         return true;
