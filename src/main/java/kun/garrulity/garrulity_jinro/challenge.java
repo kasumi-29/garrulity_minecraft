@@ -7,6 +7,8 @@ import org.bukkit.potion.*;
 
 import java.util.*;
 
+import static org.bukkit.Bukkit.getLogger;
+
 public class challenge implements CommandExecutor,TabCompleter {
     private final Main m;
     public challenge(Main a){
@@ -15,6 +17,10 @@ public class challenge implements CommandExecutor,TabCompleter {
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
         if(args.length!=2){return false;}
+        if(!(sender instanceof Player)){
+            sender.sendMessage("[ERROR]プレイヤーのみが実行可能です。");
+            return false;
+        }
         Player p=Bukkit.getPlayer(args[0]);
         if(p==null){
             sender.sendMessage("[ERROR]プレイヤー名を正しく認識できませんでした。");
@@ -28,6 +34,7 @@ public class challenge implements CommandExecutor,TabCompleter {
             sender.sendMessage("[ERROR]自分自身にチャレンジはできません。");
             return true;
         }
+        getLogger().info("Challenge "+sender.getName()+ " to "+args[0]+":"+args[1]);
         if(m.challenge((Player)sender,p,args[1])){
             Bukkit.broadcastMessage("[@GM]"+sender+"さんが"+args[0]+"さんのキーワードチャレンジに成功しました。");
             m.putSavedList((Player)sender);

@@ -10,7 +10,7 @@ public class chat implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
         Player p=event.getPlayer();
-        if(!m.isAdmin(event.getPlayer())) {
+        if(!m.isAdmin(p)) {
             p.sendMessage("[@GM]本日のキーワードは「" + m.getKeyword(p) + "」です。");
             if(m.isClear(p)){
                 p.sendMessage("[@GM]すでに本日のキーワードはCLEAR済です。");

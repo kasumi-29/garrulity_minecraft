@@ -20,6 +20,10 @@ public class debug_key implements CommandExecutor,TabCompleter {
             sender.sendMessage("引数が足りません");
             return false;
         }
+        if(!(sender instanceof Player)){
+            sender.sendMessage("[ERROR]プレイヤーのみが実行可能です。");
+            return false;
+        }
         switch (args[0]){
             case "nextRound":
                 m.nextRound();
