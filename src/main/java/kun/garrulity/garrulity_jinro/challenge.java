@@ -5,7 +5,9 @@ import org.bukkit.command.*;
 import org.bukkit.entity.*;
 import org.bukkit.potion.*;
 
-public class challenge implements CommandExecutor {
+import java.util.*;
+
+public class challenge implements CommandExecutor,TabCompleter {
     private final Main m;
     public challenge(Main a){
         m=a;
@@ -19,12 +21,12 @@ public class challenge implements CommandExecutor {
             return false;
         }
         if(m.isChallengeLog((Player) sender)){
-            sender.sendMessage("[@GM]本日分のチャレンジ上限に達しました。");
-            return false;
+            sender.sendMessage("[@GM]1日"+m.getMaxchallenge()+"回までしかチャレンジできません。");
+            return true;
         }
         if(((Player) sender).getUniqueId().equals(p.getUniqueId())){
             sender.sendMessage("[ERROR]自分自身にチャレンジはできません。");
-            return false;
+            return true;
         }
         if(m.challenge((Player)sender,p,args[1])){
             Bukkit.broadcastMessage("[@GM]"+sender+"さんが"+args[0]+"さんのキーワードチャレンジに成功しました。");
@@ -34,5 +36,14 @@ public class challenge implements CommandExecutor {
             sender.sendMessage("[@GM]キーワードが違います。");
         }
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+        if(args.length<=1) {
+            return null;
+        }else{
+            return new ArrayList<>();
+        }
     }
 }

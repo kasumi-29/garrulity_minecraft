@@ -3,9 +3,9 @@ package kun.garrulity.garrulity_jinro;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
+import java.util.*;
 
-public class word_admin implements CommandExecutor {
+public class word_admin implements CommandExecutor,TabCompleter {
     private final Main m;
     public word_admin(Main a){m=a;}
 
@@ -30,5 +30,13 @@ public class word_admin implements CommandExecutor {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+        if(args.length<=1) {
+            return null;
+        }
+        return new ArrayList<>();
     }
 }

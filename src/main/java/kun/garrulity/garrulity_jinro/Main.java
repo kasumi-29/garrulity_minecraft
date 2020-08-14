@@ -37,10 +37,15 @@ public class Main extends JavaPlugin {
         getLogger().info("Success - Garrulity_Jinro");
 
         Objects.requireNonNull(getCommand("key")).setExecutor(new debug_key(this));
+        Objects.requireNonNull(getCommand("key")).setTabCompleter(new debug_key(this));
         Objects.requireNonNull(getCommand("word-restart")).setExecutor(new word_restart(this));
+        Objects.requireNonNull(getCommand("word-restart")).setTabCompleter(new word_restart(this));
         Objects.requireNonNull(getCommand("word-setadmin")).setExecutor(new word_admin(this));
+        Objects.requireNonNull(getCommand("word-setadmin")).setTabCompleter(new word_admin(this));
         Objects.requireNonNull(getCommand("word-deladmin")).setExecutor(new word_admin(this));
+        Objects.requireNonNull(getCommand("word-deladmin")).setTabCompleter(new word_admin(this));
         Objects.requireNonNull(getCommand("word-challenge")).setExecutor(new challenge(this));
+        Objects.requireNonNull(getCommand("word-challenge")).setTabCompleter(new challenge(this));
         getServer().getPluginManager().registerEvents(new handle(this), this);
     }
 
@@ -83,10 +88,19 @@ public class Main extends JavaPlugin {
     public boolean isChallengeLog(Player p){
         Integer player_challenge=challengelog.get(p.getUniqueId());
         if(player_challenge==null){return false;}
-        return player_challenge >= 3;
+        return player_challenge >= maxchallenge;
+    }
+    public int getMaxchallenge(){
+        return maxchallenge;
+    }
+    private void CountupChallenge(Player p){
+        Integer player_challenge = challengelog.get(p.getUniqueId());
+        if(player_challenge==null){player_challenge=0;}
+        challengelog.put(p.getUniqueId(),player_challenge+1);
     }
     public boolean challenge(Player fromP,Player toP,String keyword_challenge){
         if(isChallengeLog(fromP)){return false;}
+        CountupChallenge(fromP);
         if(isKeyword(toP,keyword_challenge)){
             ban(toP,"キーワードを知られてしまったため");
             return true;

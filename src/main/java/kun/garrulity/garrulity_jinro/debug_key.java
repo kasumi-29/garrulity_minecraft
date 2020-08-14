@@ -1,16 +1,19 @@
 package kun.garrulity.garrulity_jinro;
 
 import org.bukkit.command.*;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.entity.*;
+import org.bukkit.potion.*;
+import org.bukkit.util.StringUtil;
 
-public class debug_key implements CommandExecutor {
+import java.util.*;
+
+public class debug_key implements CommandExecutor,TabCompleter {
     private final Main m;
     public debug_key(Main a){
         m=a;
     }
+
+    private static final String[] subCommand={"nextRound","skipDay","setAdmin","break","effect"};
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
         if(args.length<1){
@@ -38,7 +41,17 @@ public class debug_key implements CommandExecutor {
                 return false;
         }
 
-
+        sender.sendMessage(args[0]+"を実行しました。");
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
+        List<String> completions = new ArrayList<>();
+        if(args.length<=1) {
+            StringUtil.copyPartialMatches(args[0], Arrays.asList(subCommand), completions);
+            Collections.sort(completions);
+        }
+        return completions;
     }
 }

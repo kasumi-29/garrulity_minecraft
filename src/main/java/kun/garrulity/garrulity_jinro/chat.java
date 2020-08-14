@@ -19,6 +19,7 @@ public class chat implements Listener {
             p.sendMessage("[@GM]あなたは管理者ロールのため、お題は出題されません。");
             p.sendMessage("[@GM]管理者ロールを外れるには /word-deladmin を実行してください。");
         }
+        p.sendMessage("[@GM]他のプレイヤーのお題が分かったら、 /word-challenge コマンドを実行してみてください。");
     }
 
     @EventHandler
