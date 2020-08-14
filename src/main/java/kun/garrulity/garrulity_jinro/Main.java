@@ -129,6 +129,7 @@ public class Main extends JavaPlugin {
     public boolean isClear(Player p){return isClear(p.getUniqueId());}
     public boolean isClear(UUID id){return word_clear.contains(id);}
     public void nextRound(){//朝が来ると実行
+        //Todo 朝が来ると実行するように
         old_keyword_map.clear();
         old_keyword_map.putAll(keyword_map);
         keyword_map.clear();

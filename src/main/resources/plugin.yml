@@ -2,6 +2,11 @@ main: "kun.garrulity.garrulity_jinro.Main"
 name: "Garrulity_Jinro"
 version: "1.0.0"
 api-version: "1.15"
+description: "「人狼ジャッジメント」に登場する饒舌な人狼をモチーフとしたプラグインです。\
+翌日の朝までにランダムで選ばれるキーワード（お題）を含むワードをチャット欄に入力しない場合、BANとなります。\
+また、他のプレイヤーに自身のキーワード（お題）が知られてしまってもBANとなります。"
+author: "kasumi-29 (kasumigaura)"
+website: "https://github.com/kasumi-29/garrulity_minecraft"
 
 commands:
   key:
