@@ -6,7 +6,7 @@
 
     <groupId>kun.garrulity</groupId>
     <artifactId>garrulity_minecraft</artifactId>
-    <version>Garrulity_Minecraft_Beta1.1.0</version>
+    <version>Beta1.1.0</version>
     <repositories>
         <repository>
             <id>spigot-repo</id>
