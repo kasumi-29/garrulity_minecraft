@@ -65,4 +65,4 @@ minecraftの bukkit/spigot サーバーで利用できるサーバープラグ�
 CraftBukkit 1.15.2
 
 ## ダウンロードリンク
-まだつくってないヨ
+- [ベータ版リリース](https://github.com/kasumi-29/garrulity_minecraft/releases/download/v1.1.0/garrulity_minecraft-Beta1.1.0.jar)
