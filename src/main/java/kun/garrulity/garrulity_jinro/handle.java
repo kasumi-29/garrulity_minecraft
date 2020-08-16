@@ -15,7 +15,7 @@ public class handle implements Listener {
     public void onTimeSkip(TimeSkipEvent event){
         if(timeset) {
             m.getServer().getScheduler().runTask(m, () -> {
-                System.out.println(event.getWorld().getTime());
+                m.getLogger().info(String.valueOf(event.getWorld().getTime()));
                 timeset=!timeset;
             });
             timeset=!timeset;

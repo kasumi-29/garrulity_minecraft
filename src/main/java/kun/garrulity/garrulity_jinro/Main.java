@@ -1,7 +1,6 @@
 package kun.garrulity.garrulity_jinro;
 
-import org.bukkit.BanList;
-import org.bukkit.Bukkit;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.plugin.java.*;
 import java.util.*;
@@ -17,6 +16,7 @@ public class Main extends JavaPlugin {
     private int count;
     private int maxchallenge;
     private HashMap<UUID, Integer> challengelog;
+    private World def;
 
     @Override
     public void onEnable(){
@@ -26,6 +26,7 @@ public class Main extends JavaPlugin {
         saved=new ArrayList<>();
         count=0;
         challengelog=new HashMap<>();
+        def=Bukkit.getWorlds().get(0);
 
         saveDefaultConfig();
         word=getConfig().getStringList("word");
@@ -47,6 +48,8 @@ public class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("word-challenge")).setExecutor(new challenge(this));
         Objects.requireNonNull(getCommand("word-challenge")).setTabCompleter(new challenge(this));
         getServer().getPluginManager().registerEvents(new handle(this), this);
+
+        getServer().getScheduler().runTaskTimer(this, this::observe, 1, 1);
     }
 
     public boolean isAdmin(Player p){
@@ -128,6 +131,11 @@ public class Main extends JavaPlugin {
     public void doClear(Player p){word_clear.add(p.getUniqueId());}
     public boolean isClear(Player p){return isClear(p.getUniqueId());}
     public boolean isClear(UUID id){return word_clear.contains(id);}
+    public void observe(){
+        if(def.getTime()==1L){
+            nextRound();
+        }
+    }
     public void nextRound(){//朝が来ると実行
         //Todo 朝が来ると実行するように
         old_keyword_map.clear();
