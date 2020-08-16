@@ -18,6 +18,9 @@ public class Main extends JavaPlugin {
     private HashMap<UUID, Integer> challengelog;
     private World def;
 
+    /**
+     * 変数の初期化、TabCompleterの登録、registerEventsの登録、Executorの登録など
+     */
     @Override
     public void onEnable(){
         keyword_map=new HashMap<>();
@@ -35,8 +38,6 @@ public class Main extends JavaPlugin {
         maxchallenge=getConfig().getInt("maxchallenge");
 
         getServer().getPluginManager().registerEvents(new chat(this), this);
-        getLogger().info("Success - Garrulity_Jinro");
-
         Objects.requireNonNull(getCommand("key")).setExecutor(new debug_key(this));
         Objects.requireNonNull(getCommand("key")).setTabCompleter(new debug_key(this));
         Objects.requireNonNull(getCommand("word-restart")).setExecutor(new word_restart(this));
@@ -50,11 +51,22 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new handle(this), this);
 
         getServer().getScheduler().runTaskTimer(this, this::observe, 1, 1);
+        getLogger().info("Success - Garrulity_Jinro");
     }
 
+    /**
+     * 管理者ロールかどうか確かめる
+     * @param p プレイヤーオブジェクト
+     * @return 管理者ロールかどうかの真偽値
+     */
     public boolean isAdmin(Player p){
         return admin.contains(p.getName());
     }
+
+    /**
+     * 管理者ロールに追加する
+     * @param p プレイヤーオブジェクト
+     */
     public void setAdmin(Player p){
         if(admin.add(p.getName())) {
             getConfig().set("admin", new ArrayList<>(admin));
@@ -63,15 +75,31 @@ public class Main extends JavaPlugin {
             old_keyword_map.remove(p.getUniqueId());
         }
     }
+
+    /**
+     * 管理者ロールから削除する
+     * @param p プレイヤーオブジェクト
+     */
     public void delAdmin(Player p){
         if(admin.remove(p.getName())) {
             getConfig().set("admin", new ArrayList<>(admin));
             saveConfig();
         }
     }
+
+    /**
+     * チャレンジが成功した人をListに登録する
+     * @param p プレイヤーオブジェクト
+     */
     public void putSavedList(Player p){
         saved.add(p.getUniqueId());
     }
+
+    /**
+     * キーワード（お題）を取得する
+     * @param p プレイヤーオブジェクト
+     * @return キーワード
+     */
     public String getKeyword(Player p){
         String p_key=keyword_map.get(p.getUniqueId());
         if(p_key==null){
