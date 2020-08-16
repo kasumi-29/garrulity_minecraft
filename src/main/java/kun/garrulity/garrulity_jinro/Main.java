@@ -137,7 +137,6 @@ public class Main extends JavaPlugin {
         }
     }
     public void nextRound(){//朝が来ると実行
-        //Todo 朝が来ると実行するように
         old_keyword_map.clear();
         old_keyword_map.putAll(keyword_map);
         keyword_map.clear();
@@ -157,7 +156,7 @@ public class Main extends JavaPlugin {
                 keyword_map.put(id,new_keyword);
             }
         }
-        Bukkit.broadcastMessage("[@GM]本日のBAN者は"+count+"人です。");
+        Bukkit.broadcastMessage("[@GM]朝になりました。本日のBAN者は"+count+"人です。");
         Bukkit.broadcastMessage("");
         //BAN通知の後にまとめてキーワードを送信する
         Bukkit.broadcastMessage("[@GM]おめでとうございます。何とか疑われずに生き残ったようですね！");
