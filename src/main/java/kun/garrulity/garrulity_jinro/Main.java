@@ -15,11 +15,19 @@ public class Main extends JavaPlugin {
     private ArrayList<UUID> saved;
     private int count;
     private int maxchallenge;
+    /**
+     * プレイヤーのUUIDと現在のチャレンジ回数を保持するMap.
+     * <p>
+     * 日が明けてから一度もチャレンジしていない場合、そもそも登録されていない<br>
+     * Integerが取る値は、1,2,3...,macchallengeのいずれか<br>
+     * </p>
+     */
     private HashMap<UUID, Integer> challengelog;
     private World def;
 
     /**
-     * 変数の初期化、TabCompleterの登録、registerEventsの登録、Executorの登録など
+     * プラグインの起動処理.
+     * <p>変数の初期化、TabCompleterの登録、registerEventsの登録、Executorの登録など</p>
      */
     @Override
     public void onEnable(){
@@ -55,7 +63,7 @@ public class Main extends JavaPlugin {
     }
 
     /**
-     * 管理者ロールかどうか確かめる
+     * 管理者ロールかどうか確かめる.
      * @param p プレイヤーオブジェクト
      * @return 管理者ロールかどうかの真偽値
      */
@@ -64,7 +72,7 @@ public class Main extends JavaPlugin {
     }
 
     /**
-     * 管理者ロールに追加する
+     * 管理者ロールに追加する.
      * @param p プレイヤーオブジェクト
      */
     public void setAdmin(Player p){
@@ -77,7 +85,7 @@ public class Main extends JavaPlugin {
     }
 
     /**
-     * 管理者ロールから削除する
+     * 管理者ロールから削除する.
      * @param p プレイヤーオブジェクト
      */
     public void delAdmin(Player p){
@@ -88,7 +96,7 @@ public class Main extends JavaPlugin {
     }
 
     /**
-     * チャレンジが成功した人をListに登録する
+     * チャレンジが成功した人をListに登録する.
      * @param p プレイヤーオブジェクト
      */
     public void putSavedList(Player p){
@@ -96,9 +104,9 @@ public class Main extends JavaPlugin {
     }
 
     /**
-     * キーワード（お題）を取得する
+     * キーワード（お題）を取得する.
      * @param p プレイヤーオブジェクト
-     * @return キーワード
+     * @return 割り当てられた（または割り当て済の）キーワード
      */
     public String getKeyword(Player p){
         String p_key=keyword_map.get(p.getUniqueId());
@@ -108,29 +116,66 @@ public class Main extends JavaPlugin {
         }
         return p_key;
     }
+
+    /**
+     * ランダムにキーワードを取得する.
+     * @return キーワード
+     */
     public String putKeyword(){
         Random rand = new Random();
         int k=rand.nextInt(max);
         return word.get(k);
     }
+
+    /**
+     * キーワードが一致しているかを判定する.
+     * @param p チャレンジされるプレイヤーオブジェクト
+     * @param keyword_challenge チャレンジするキーワード
+     * @return チャレンジが成功したかどうか
+     */
     public boolean isKeyword(Player p,String keyword_challenge){
         return keyword_map.get(p.getUniqueId()).equals(keyword_challenge) || old_keyword_map.get(p.getUniqueId()).equals(keyword_challenge);
     }
-    public boolean isChallengeLog(Player p){
+
+    /**
+     * チャレンジ可能か判定する.
+     * @param p 判定されるプレイヤー
+     * @return チャレンジ可能ならfalseを返す
+     */
+    public boolean isnotChallengeLog(Player p){
         Integer player_challenge=challengelog.get(p.getUniqueId());
         if(player_challenge==null){return false;}
         return player_challenge >= maxchallenge;
     }
+
+    /**
+     * チャレンジ可能な最大回数を取得する.
+     * @return チャレンジ可能な最大回数
+     */
     public int getMaxchallenge(){
         return maxchallenge;
     }
+
+    /**
+     * チャレンジ回数をカウントアップする.
+     * <p>ただし最大回数を超えているかの判定は行っていないため、呼び出し側で判定すること。</p>
+     * @param p カウントアップするプレイヤー
+     */
     private void CountupChallenge(Player p){
         Integer player_challenge = challengelog.get(p.getUniqueId());
-        if(player_challenge==null){player_challenge=0;}
+        if(player_challenge==null){player_challenge=1;}
         challengelog.put(p.getUniqueId(),player_challenge+1);
     }
+
+    /**
+     * チャレンジを行う.
+     * @param fromP チャレンジを行うプレイヤーオブジェクト
+     * @param toP チャレンジを行われるプレイヤー
+     * @param keyword_challenge 予想したキーワード
+     * @return チャレンジ最大回数より多い場合、またはチャレンジが失敗した場合、false。チャレンジが成功した場合trueを返す。
+     */
     public boolean challenge(Player fromP,Player toP,String keyword_challenge){
-        if(isChallengeLog(fromP)){return false;}
+        if(isnotChallengeLog(fromP)){return false;}
         CountupChallenge(fromP);
         if(isKeyword(toP,keyword_challenge)){
             ban(toP,"キーワードを知られてしまったため");
@@ -138,14 +183,31 @@ public class Main extends JavaPlugin {
         }
         return false;
     }
+
+    /**
+     * キーワードマップを削除する.
+     * <p>デバッグ用に存在しているだけのため、外部からの呼び出しは非推奨</p>
+     * @deprecated
+     */
     public void AllResetKeyword(){
         keyword_map.clear();
         old_keyword_map.clear();
         word_clear.clear();
     }
+
+    /**
+     * BANを行う.
+     * <p>
+     * ただし、管理者ロールを指定した場合、処理は行われない<br>
+     * また、カウントアップと全員へのBAN結果通知も同時に行う<br>
+     * さらにkeyword_mapなどのメモリ上に展開されている変数から、プレイヤーの情報を完全に削除する
+     * </p>
+     * @param p BANするプレイヤーオブジェクト
+     * @param reason BAN理由となる文字列を入力する
+     */
     private void ban(Player p,String reason){
         if(isAdmin(p)){return;}
-        Bukkit.getBanList(BanList.Type.NAME).addBan(p.getUniqueId().toString(), reason, null, null);
+        Bukkit.getBanList(BanList.Type.NAME).addBan(p.getUniqueId().toString(), ChatColor.WHITE+reason, null, null);
         Objects.requireNonNull(p).kickPlayer(reason);
         count++;
         keyword_map.remove(p.getUniqueId());
@@ -155,16 +217,47 @@ public class Main extends JavaPlugin {
         challengelog.remove(p.getUniqueId());
         Bukkit.broadcastMessage("[@GM]"+p.getPlayerListName()+"さんがBANされました。");
     }
+
+    /**
+     * 日付を更新するために、全員がキーワード（お題）をクリアしたことにする.
+     */
     public void skipDay(){word_clear.addAll(keyword_map.keySet());}
+
+    /**
+     * プレイヤーをクリアさせる.
+     * @param p クリアさせるプレイヤーオブジェクト
+     */
     public void doClear(Player p){word_clear.add(p.getUniqueId());}
+
+    /**
+     * クリアしているかどうか判定する.
+     * <p>プレイヤーオブジェクトを用いるオーバーロード関数</p>
+     * @param p プレイヤーオブジェクト
+     * @return クリアしているかどうかの真偽値
+     */
     public boolean isClear(Player p){return isClear(p.getUniqueId());}
+
+    /**
+     * クリアしているかどうか判定する.
+     * @param id プレイヤーのユニークID
+     * @return クリアしているかどうかの真偽値
+     */
     public boolean isClear(UUID id){return word_clear.contains(id);}
+
+    /**
+     * 毎Tick実行し、夜明けを判定する.
+     */
     public void observe(){
         if(def.getTime()==1L){
             nextRound();
         }
     }
-    public void nextRound(){//朝が来ると実行
+
+    /**
+     * 朝が来たら実行する関数.
+     * <p>BAN処理、新たなキーワード（お題）の割り当て、チャレンジ報酬</p>
+     */
+    public void nextRound(){
         old_keyword_map.clear();
         old_keyword_map.putAll(keyword_map);
         keyword_map.clear();

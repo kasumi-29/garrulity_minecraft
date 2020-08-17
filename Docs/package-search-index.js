@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"kun.garrulity.garrulity_jinro"},{"l":"すべてのパッケージ","url":"allpackages-index.html"}]

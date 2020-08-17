@@ -24,7 +24,7 @@ public class challenge implements CommandExecutor,TabCompleter {
             sender.sendMessage("[ERROR]プレイヤー名を正しく認識できませんでした。");
             return false;
         }
-        if(m.isChallengeLog((Player) sender)){
+        if(m.isnotChallengeLog((Player) sender)){
             sender.sendMessage("[@GM]1日"+m.getMaxchallenge()+"回までしかチャレンジできません。");
             return true;
         }
