@@ -13,6 +13,10 @@ public class challenge implements CommandExecutor,TabCompleter {
         m=a;
     }
 
+    /**
+     * /word-challenge をキャッチする関数.
+     * <p>プレイヤーのみしか実行できない（プレイヤー以外は弾く）</p>
+     */
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
         if(args.length!=2){return false;}
         if(!(sender instanceof Player)){
@@ -43,6 +47,9 @@ public class challenge implements CommandExecutor,TabCompleter {
         return true;
     }
 
+    /**
+     * /word-challenge のTabキーによる補完を行う.
+     */
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
         if(args.length<=1) {

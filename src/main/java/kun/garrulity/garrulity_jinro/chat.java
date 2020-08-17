@@ -7,6 +7,10 @@ public class chat implements Listener {
     private final Main m;
     public chat(Main a){m=a;}
 
+    /**
+     * プレイヤーがワールドに入った際の処理を行う.
+     * @param event プレイヤーが入った際のイベント
+     */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
         m.getServer().getScheduler().runTaskLater(m, () -> {
@@ -25,6 +29,10 @@ public class chat implements Listener {
         },1L);
     }
 
+    /**
+     * チャットを送信した時点で、キーワード（お題）がクリアしたかどうか判定する.
+     * @param event 非同期のチャットイベント
+     */
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event){
         String try_word=event.getMessage();
