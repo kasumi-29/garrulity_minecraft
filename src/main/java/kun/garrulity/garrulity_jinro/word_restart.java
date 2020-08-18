@@ -12,6 +12,10 @@ public class word_restart implements CommandExecutor,TabCompleter {
         m=a;
     }
 
+    /**
+     * /word-restart をキャッチする.
+     * <p>なお、呼び出された場合は時刻が2にセットされる</p>
+     */
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
         m.skipDay();
         for(World w:Bukkit.getWorlds()){
@@ -21,6 +25,9 @@ public class word_restart implements CommandExecutor,TabCompleter {
         return true;
     }
 
+    /**
+     * /word-restart のTabキーによる補完を行う.
+     */
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
         return new ArrayList<>();

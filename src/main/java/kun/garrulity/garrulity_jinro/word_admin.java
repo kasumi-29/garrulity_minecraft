@@ -9,6 +9,10 @@ public class word_admin implements CommandExecutor,TabCompleter {
     private final Main m;
     public word_admin(Main a){m=a;}
 
+    /**
+     * /word-setadmin /word-deladmin をキャッチする.
+     * <p>管理者ロールの付与および剥奪を行う</p>
+     */
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
         if(args.length!=1){return false;}
         Player p=m.getServer().getPlayer(args[0]);
@@ -34,6 +38,9 @@ public class word_admin implements CommandExecutor,TabCompleter {
         return true;
     }
 
+    /**
+     * /word-setadmin /word-deladmin のTabキーによる補完を行う.
+     */
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] args) {
         if(args.length<=1) {

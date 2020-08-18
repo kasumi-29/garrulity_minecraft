@@ -11,6 +11,13 @@ public class handle implements Listener {
     }
     public static boolean timeset=true;
 
+    /**
+     * <p>
+     * 今後の拡張用にclass自体は残っているものの、使用されていない。<br>
+     * また、このメソッドはなんの役割も果たさない。
+     * </p>
+     * @deprecated
+     */
     @EventHandler
     public void onTimeSkip(TimeSkipEvent event){
         //
@@ -23,6 +30,5 @@ public class handle implements Listener {
         //}
         //
     }
-    //今後の拡張用にclass自体は残しておきますが、現在は使用していません。
 
 }
