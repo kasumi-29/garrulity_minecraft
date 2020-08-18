@@ -52,7 +52,8 @@ public class debug_key implements CommandExecutor,TabCompleter {
                 m.setAdmin((Player) sender);
                 break;
             case "break":
-                m.AllResetKeyword();
+                //m.AllResetKeyword();
+                sender.sendMessage("[注意]このコマンドを実行するには、再コンパイルが必要です。");
                 break;
             case "effect":
                 ((LivingEntity) sender).addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,10*60*20,2,false,false,true));
