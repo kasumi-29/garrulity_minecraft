@@ -4,6 +4,7 @@ import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.plugin.java.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main extends JavaPlugin {
     private static List<String> word;//乱数で取得するため、Listのままで放置
@@ -134,8 +135,16 @@ public class Main extends JavaPlugin {
      * @return チャレンジが成功したかどうか
      */
     public boolean isKeyword(Player p,String keyword_challenge){
-
-        return keyword_map.get(p.getUniqueId()).equals(keyword_challenge) || old_keyword_map.get(p.getUniqueId()).equals(keyword_challenge);
+        boolean out=false;
+        String today_keyword=keyword_map.get(p.getUniqueId());
+        if(today_keyword!=null){
+            out=out || today_keyword.equals(keyword_challenge);
+        }
+        String yesterday_keyword=old_keyword_map.get(p.getUniqueId());
+        if(yesterday_keyword!=null){
+            out=out || yesterday_keyword.equals(keyword_challenge);
+        }
+        return  out;
     }
 
     /**
