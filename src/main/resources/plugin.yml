@@ -18,11 +18,11 @@ commands:
     permission: garrulity.op
     usage: "/<command>"
   word-setadmin:
-    description: "お題が出題されない、管理者ロールに追加します"
+    description: "お題が出題されない、観戦者ロールに追加します"
     permission: garrulity.op
     usage: "/<command> [player]"
   word-deladmin:
-    description: "お題が出題されない、管理者ロールから削除します"
+    description: "お題が出題されない、観戦者ロールから削除します"
     permission: garrulity.op
     usage: "/<command> [player]"
   word-challenge:

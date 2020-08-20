@@ -144,7 +144,7 @@ public class Main extends JavaPlugin {
         boolean out=false;
         String today_keyword=keyword_map.get(p.getUniqueId());
         if(today_keyword!=null){
-            out=out || today_keyword.equals(keyword_challenge);
+            out=today_keyword.equals(keyword_challenge);
         }
         String yesterday_keyword=old_keyword_map.get(p.getUniqueId());
         if(yesterday_keyword!=null){
@@ -282,7 +282,7 @@ public class Main extends JavaPlugin {
             Player p=Bukkit.getPlayer(id);
             if(p==null){continue;}
             if(isAdmin(p)){
-                p.sendMessage("[@GM]すでにあなたは管理者ロールです。");
+                p.sendMessage("[@GM]すでにあなたは観戦者ロールです。");
                 continue;
             }
             if (!isClear(id)) {//キーワードを入力できなかった人
