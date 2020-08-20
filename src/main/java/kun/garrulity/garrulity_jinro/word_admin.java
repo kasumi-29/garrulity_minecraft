@@ -18,6 +18,7 @@ public class word_admin implements CommandExecutor,TabCompleter {
         Player p=m.getServer().getPlayer(args[0]);
         if(p==null){
             sender.sendMessage("[@GM]"+args[0]+"さんは接続中のプレイヤーとして認識できませんでした。");
+            sender.sendMessage("[@GM]オフラインプレイヤーを対象に管理者ロールの操作する場合は、configファイルを編集してください。");
             return false;
         }else if (cmd.getName().equals("word-setadmin")){
             m.setAdmin(p);

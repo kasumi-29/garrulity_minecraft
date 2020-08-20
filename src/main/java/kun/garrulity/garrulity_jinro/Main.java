@@ -2,9 +2,11 @@ package kun.garrulity.garrulity_jinro;
 
 import org.bukkit.*;
 import org.bukkit.entity.*;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.*;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
+
+import static org.bukkit.Bukkit.getOnlinePlayers;
 
 public class Main extends JavaPlugin {
     private static List<String> word;//乱数で取得するため、Listのままで放置
@@ -61,6 +63,10 @@ public class Main extends JavaPlugin {
 
         getServer().getScheduler().runTaskTimer(this, this::observe, 1, 1);
         getLogger().info("Success - Garrulity_Jinro");
+
+        for(Player p:getServer().getOnlinePlayers()) {
+            new chat(this).onPlayerJoin(new PlayerJoinEvent(p, ChatColor.YELLOW + "プラグインが再読込されました"));
+        }
     }
 
     /**
