@@ -74,4 +74,4 @@ Java version 1.8.0 では動作しないことを確認済です。
 - [Javadoc](https://kasumi-29.github.io/garrulity_minecraft/Docs/kun/garrulity/garrulity_jinro/package-summary.html)
 
 ## ダウンロードリンク
-- [ダウンロードはこちら](https://github.com/kasumi-29/garrulity_minecraft/releases/tag/v2.0.2)
+- [ダウンロードはこちら](https://github.com/kasumi-29/garrulity_minecraft/releases/tag/v2.1.0)

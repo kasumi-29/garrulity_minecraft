@@ -134,6 +134,7 @@ public class Main extends JavaPlugin {
      * @return チャレンジが成功したかどうか
      */
     public boolean isKeyword(Player p,String keyword_challenge){
+
         return keyword_map.get(p.getUniqueId()).equals(keyword_challenge) || old_keyword_map.get(p.getUniqueId()).equals(keyword_challenge);
     }
 
@@ -281,6 +282,7 @@ public class Main extends JavaPlugin {
         Bukkit.broadcastMessage("");
         //BAN通知の後にまとめてキーワードを送信する
         Bukkit.broadcastMessage("[@GM]おめでとうございます。何とか疑われずに生き残ったようですね！");
+        word_clear.clear();
         for (UUID id:keyword_map.keySet()){
             Player p=Bukkit.getPlayer(id);
             if(p==null){continue;}
@@ -293,7 +295,6 @@ public class Main extends JavaPlugin {
             p.sendTitle("お題CLEAR！","",10,70,20);
             doClear(p);
         }
-        word_clear.clear();
         saved.clear();
         count=0;
 
