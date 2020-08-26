@@ -14,8 +14,8 @@ public class Main extends JavaPlugin {
     private static HashSet<String> admin;
     private HashMap<UUID, String> keyword_map;
     private HashMap<UUID, String> old_keyword_map;
-    private ArrayList<UUID> word_clear;
-    private ArrayList<UUID> saved;
+    private HashSet<UUID> word_clear;
+    private HashSet<UUID> saved;
     private int count;
     private int maxchallenge;
     /**
@@ -36,8 +36,8 @@ public class Main extends JavaPlugin {
     public void onEnable(){
         keyword_map=new HashMap<>();
         old_keyword_map=new HashMap<>();
-        word_clear=new ArrayList<>();
-        saved=new ArrayList<>();
+        word_clear=new HashSet<>();
+        saved=new HashSet<>();
         count=0;
         challengelog=new HashMap<>();
         def=Bukkit.getWorlds().get(0);
@@ -161,7 +161,7 @@ public class Main extends JavaPlugin {
     public boolean isnotChallengeLog(Player p){
         Integer player_challenge=challengelog.get(p.getUniqueId());
         if(player_challenge==null){return false;}
-        return player_challenge >= maxchallenge;
+        return player_challenge > maxchallenge;
     }
 
     /**
@@ -278,7 +278,7 @@ public class Main extends JavaPlugin {
         old_keyword_map.putAll(keyword_map);
         keyword_map.clear();
         challengelog.clear();
-        for (UUID id : old_keyword_map.keySet()) {
+        for (UUID id : new HashSet<>(old_keyword_map.keySet())) {
             Player p=Bukkit.getPlayer(id);
             if(p==null){continue;}
             if(isAdmin(p)){

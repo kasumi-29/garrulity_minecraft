@@ -38,7 +38,7 @@ public class challenge implements CommandExecutor,TabCompleter {
         }
         m.getLogger().info("Challenge "+sender.getName()+ " to "+args[0]+":"+args[1]);
         if(m.challenge((Player)sender,p,args[1])){
-            Bukkit.broadcastMessage("[@GM]"+sender+"さんが"+args[0]+"さんのキーワードチャレンジに成功しました。");
+            Bukkit.broadcastMessage("[@GM]"+sender.getName()+"さんが"+args[0]+"さんのキーワードチャレンジに成功しました。");
             m.putSavedList((Player)sender);
             ((LivingEntity) sender).addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,10*60*20,2,false,false,true));
         }else{
