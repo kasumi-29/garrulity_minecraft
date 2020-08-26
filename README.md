@@ -55,11 +55,11 @@ minecraftの bukkit/spigot サーバーで利用できるサーバープラグ�
 注意：このコマンドはデバッグ用のコマンドであり、デフォルトで使用不可となっています。基本的には使用しないでください。
 
 ## その他
-- 初回起動時、Pluginフォルダ内に `config.yml` が生成されます。この中の `admin:` の項目では「観戦者ロール」の手動追加が出来ます。
+- 初回起動時、Pluginフォルダ内に `Garrulity_Jinro` フォルダが生成され、その中に `config.yml` が生成されます。この中の `admin:` の項目では「観戦者ロール」の手動追加が出来ます。
 - `config.yml` の `word:` の項目ではキーワード（お題）一覧があります。この項目をカスタマイズすることでキーワード（お題）を追加または削除できます。なお、デフォルトでは300個のキーワード（お題）が収録されています。
 - `config.yml` の `maxchallenge:` の項目ではプレイヤーがチャレンジできる（`/word-challenge`を実行できる）上限回数が設定されています。
 デフォルトでは3回です。
-- `config.yml` を変更した後には必ず `/reload` コマンドでプラグインの再読み込みを行ってください。
+- `config.yml` を変更した後には必ずサーバーの再起動（または `/reload` コマンド）でプラグインの再読み込みを行ってください。
 - このプラグインでは、はじめに読み込まれたワールドの時間に基づいて夜明けを判定しています。そのためover world、nether、the end以外のディメンションを追加するプラグインを併用すると、このプラグインが正常に動作しなくなる可能性があります。
 - "garrulity"とは、「饒舌な」という意味です。
 
@@ -71,7 +71,7 @@ CraftBukkit 1.15.2
 CraftBukkit 1.16.2
 
 #### <注意>
-Java version 1.8.0 では動作しないことを確認済です。
+[Java version 1.8.0 （Java8）](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html)では動作しないことを確認済です。
 
 ## リファレンス
 - [Javadoc](https://kasumi-29.github.io/garrulity_minecraft/Docs/kun/garrulity/garrulity_jinro/package-summary.html)
