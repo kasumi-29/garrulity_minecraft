@@ -11,7 +11,7 @@ website: "https://github.com/kasumi-29/garrulity_minecraft"
 commands:
   key:
     description: "デバッグ用"
-    permission: garrulity.op
+    permission: garrulity.debug
     usage: "/<command> [SubCommand]"
   word-restart:
     description: "朝にした上で、キーワードを割り振り直します"
