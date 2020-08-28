@@ -64,14 +64,13 @@ minecraftの bukkit/spigot サーバーで利用できるサーバープラグ�
 - "garrulity"とは、「饒舌な」という意味です。
 
 ## 動作確認済環境
-- Java version 13.0.1  
+- Java version 13  
 CraftBukkit 1.15.2  
 
-- Java version 13.0.1  
+- Java version 13  
 CraftBukkit 1.16.2
 
-#### <注意>
-[Java version 1.8.0 （Java8）](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html)では動作しないことを確認済です。
+**Javaのバージョン または CraftBukkitのバージョンが違う場合、動かないことがあります。**
 
 ## リファレンス
 - [Javadoc](https://kasumi-29.github.io/garrulity_minecraft/Docs/kun/garrulity/garrulity_jinro/package-summary.html)
